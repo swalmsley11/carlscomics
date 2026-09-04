@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #a0a0a0;
+  font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Site header wrapper ── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── Header ── */
+
+header {
+  background: linear-gradient(to bottom, #e07030 0%, #b84010 55%, #7a2800 100%);
+  border-top: 3px solid #f5c200;
+  transition: padding 0.25s ease;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 40px 28px;
+  box-shadow: 0 6px 40px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: #ffffff;
+  letter-spacing: 4px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  transition: font-size 0.25s ease;
+}
+
+.byline {
+  font-family: 'Caveat', cursive;
+  font-size: 1.6rem;
+  color: #ffe4c0;
+  transition: font-size 0.25s ease;
+}
+
+/* ── Nav ── */
+
+nav {
+  background-color: #eeeeee;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 13px 40px;
+  border-bottom: 2px solid #f5c200;
+  max-height: 60px;
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+}
+
+nav a {
+  text-decoration: none;
+  color: #444;
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  transition: color 0.15s;
+}
+
+nav a:hover {
+  color: #f07830;
+}
+
+/* ── Comic area ── */
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 60px 40px;
+  flex: 1;
+}
+
+.comic-frame {
+  background: #f8f2e2;
+  padding: 12px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    0 40px 80px rgba(0, 0, 0, 0.2);
+}
+
+.comic-frame img {
+  display: block;
+  max-width: 640px;
+  width: 100%;
+}
+
+/* ── Arrows ── */
+
+.arrow {
+  background-color: #2e2e2e;
+  border: 2px solid #555;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #bbb;
+  flex-shrink: 0;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.arrow:hover {
+  background-color: #f07830;
+  border-color: #f07830;
+  color: white;
+  transform: scale(1.08);
+}
+
+.arrow:active {
+  transform: scale(0.95);
+}
+
+/* ── Footer ── */
+
+footer {
+  background-color: #8e8e8e;
+  border-top: 2px solid #f5c200;
+  padding: 20px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+footer p {
+  color: #333;
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: #f07830;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Scrolled state ── */
+
+.site-header.scrolled header {
+  padding: 14px 40px;
+}
+
+.site-header.scrolled h1 {
+  font-size: 2rem;
+}
+
+.site-header.scrolled .byline {
+  font-size: 1rem;
+}
+
+.site-header.scrolled nav {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 700px) {
+  header {
+    padding: 20px 24px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  h1 {
+    font-size: 2.6rem;
+  }
+
+  .byline {
+    font-size: 1.3rem;
+  }
+
+  nav {
+    gap: 24px;
+    padding: 10px 20px;
+  }
+
+  main {
+    display: grid;
+    grid-template-areas:
+      "comic comic"
+      "prev  next";
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 32px 16px;
+  }
+
+  .comic-frame {
+    grid-area: comic;
+  }
+
+  .arrow-prev {
+    grid-area: prev;
+    justify-self: center;
+  }
+
+  .arrow-next {
+    grid-area: next;
+    justify-self: center;
+  }
+
+  footer {
+    padding: 16px 24px;
+  }
+}
