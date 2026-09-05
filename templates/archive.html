@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Archive &mdash; Carl's Comics{% endblock %}
+{% block description %}Every Carl's Comics strip, from the beginning.{% endblock %}
+
+{% block content %}
+  <main class="archive">
+
+    {# ── Edit the blurb here. It is plain text, nothing generated. ── #}
+    <section class="archive-intro">
+      <h2>The Archive</h2>
+      <p>
+        Carl's Comics is a four-panel webcomic, written and drawn by Layla.
+        It follows the adventures and musings of Carl, my pet cockatiel &mdash;
+        who eats, sleeps, screams and schemes, mostly in that order.
+      </p>
+      <p class="archive-count">
+        {{ comics|length }} comic{{ '' if comics|length == 1 else 's' }} so far.
+      </p>
+    </section>
+
+    <div class="gallery">
+      {% for comic in comics %}
+      <a class="gallery-item" href="{{ comic.url }}">
+        <div class="frame">
+          <div class="mat">
+            <picture>
+              <source srcset="{{ comic.thumb.webp }}" type="image/webp">
+              <img src="{{ comic.thumb.jpg }}"
+                   alt=""
+                   width="{{ comic.thumb.width }}"
+                   height="{{ comic.thumb.height }}"
+                   loading="lazy">
+            </picture>
+          </div>
+        </div>
+        <div class="plaque">
+          <span class="plaque-title">{{ comic.title }}</span>
+          <span class="plaque-meta">No. {{ comic.number }} &middot; {{ comic.date_display }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+  </main>
+{% endblock %}

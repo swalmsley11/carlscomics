@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ comic.title }} &mdash; Carl's Comics{% endblock %}
+{% block description %}{{ comic.title }}, comic number {{ comic.number }} of Carl's Comics.{% endblock %}
+
+{% block content %}
+  <main>
+    {% if prev %}
+    <a class="arrow arrow-prev" href="{{ prev.url }}" rel="prev" aria-label="Previous comic">&#8592;</a>
+    {% else %}
+    <span class="arrow arrow-prev" aria-hidden="true">&#8592;</span>
+    {% endif %}
+    <div class="comic-frame">
+      <picture>
+        <source srcset="{{ comic.display.webp }}" type="image/webp">
+        <img src="{{ comic.display.jpg }}" alt="{{ comic.alt }}">
+      </picture>
+    </div>
+    {% if next %}
+    <a class="arrow arrow-next" href="{{ next.url }}" rel="next" aria-label="Next comic">&#8594;</a>
+    {% else %}
+    <span class="arrow arrow-next" aria-hidden="true">&#8594;</span>
+    {% endif %}
+  </main>
+{% endblock %}
