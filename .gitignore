@@ -1,8 +1,8 @@
 # Mac system files
 .DS_Store
 
-# Original art folder — canonical images live in comic/published/
-art/
+# Temp folder
+tmp/
 
 # Python virtual environment
 .venv/

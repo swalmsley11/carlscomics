@@ -36,6 +36,13 @@ header {
   box-shadow: 0 6px 40px rgba(0, 0, 0, 0.7);
 }
 
+.logo {
+  height: 64px;
+  width: auto;
+  align-self: center;
+  transition: height 0.25s ease;
+}
+
 h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 4rem;
@@ -303,6 +310,10 @@ footer a:hover {
   font-size: 2rem;
 }
 
+.site-header.scrolled .logo {
+  height: 36px;
+}
+
 .site-header.scrolled .byline {
   font-size: 1rem;
 }
@@ -319,6 +330,10 @@ footer a:hover {
     padding: 20px 24px;
     flex-wrap: wrap;
     gap: 6px;
+  }
+
+  .logo {
+    height: 48px;
   }
 
   h1 {
