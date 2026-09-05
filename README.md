@@ -4,13 +4,12 @@ Source for [carlscomics.com](https://carlscomics.com) — a webcomic by Layla.
 
 ## Stack
 
-- **HTML + CSS** — hand-written, no frameworks
-- **Python + Jinja2 + Pillow** — static site generator (`build.py`)
-- **GitHub Pages** — hosting, serving the `docs/` folder
-- **Cloudflare** — DNS
+- **HTML + CSS**: hand-written, no frameworks
+- **Python + Jinja2 + Pillow**: static site generator (`build.py`)
+- **GitHub Pages**: hosting, serving the `docs/` folder
+- **Cloudflare**: DNS
 
-Jinja2 and Pillow run on the Mac at build time only. Nothing but static
-HTML, CSS and images is ever served to a visitor.
+Jinja2 and Pillow run locally at build time only. Nothing but static HTML, CSS and images is ever served to a visitor.
 
 ## Setup (once)
 
@@ -28,26 +27,24 @@ cd docs && python3 -m http.server 8765
 
 Then open <http://localhost:8765/>.
 
-The site uses root-relative links (`/archive/`, `/static/style.css`), so it
-must be previewed through a local server — opening `docs/index.html` straight
-from Finder will not find the stylesheet.
+The site uses root-relative links (`/archive/`, `/static/style.css`), so it must be previewed locally.
 
 ## Repo structure
 
 ```
 comic/
-  drafts/          # new art lands here from the iPad, unprocessed
-  published/       # source images, numbered and sequenced — master copies
+  drafts/          # new art lands here unprocessed
+  published/       # source images, numbered and sequenced
   meta/            # one .json per comic
 templates/         # Jinja2 HTML templates
 static/            # CSS, JS
-docs/              # BUILD OUTPUT — committed, served by Pages, never hand-edited
+docs/              # BUILD OUTPUT
 build.py           # the generator
 ```
 
 ## Adding a comic
 
-1. Put the finished square-ish page in `comic/published/` as `NNNN_slug.png`.
+1. Put the finished comic in `comic/published/` as `NNNN_slug.png`.
 2. Copy an existing file in `comic/meta/` to `NNNN.json` and fill it in:
 
    | field            | what it is                                              |
@@ -60,7 +57,7 @@ build.py           # the generator
    | `thumb_quadrant` | which panel the archive frame shows — `top-left`, `top-right`, `bottom-left`, `bottom-right` |
    | `characters`     | list of names                                            |
    | `tags`           | list of tags                                             |
-   | `alt`            | written description of all four panels — **required**    |
+   | `alt`            | written description of all four panels — _(Optional)_   |
 
 3. Run the build, preview it, then commit and push.
 
