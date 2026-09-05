@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Carl's Comics{% endblock %}</title>
-  <meta name="description" content="{% block description %}A webcomic about Carl the cockatiel, written and drawn by Layla.{% endblock %}">
+  <title>About &mdash; Carl's Comics</title>
+  <meta name="description" content="About Carl's Comics.">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="alternate" type="application/rss+xml" title="Carl's Comics" href="/rss.xml">
 </head>
@@ -24,10 +24,16 @@
     </nav>
   </div>
 
-{% block content %}{% endblock %}
+  <main class="archive">
+    <section class="archive-intro">
+      <h2>About</h2>
+      <p>Coming soon.</p>
+    </section>
+    <img src="/static/about-placeholder.png" alt="" width="800" height="450">
+  </main>
 
   <footer>
-    <p>&#169; {{ year }} Carl's Comics by Layla. All rights reserved.</p>
+    <p>&#169; 2026 Carl's Comics by Layla. All rights reserved.</p>
     <a href="/rss.xml">RSS Feed</a>
   </footer>
 

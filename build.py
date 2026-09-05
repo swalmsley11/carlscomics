@@ -208,6 +208,11 @@ def main():
         env.get_template("archive.html").render(comics=comics, **shared),
     )
 
+    write_page(
+        OUT / "about" / "index.html",
+        env.get_template("about.html").render(**shared),
+    )
+
     print("Copying static files...")
     shutil.copytree(STATIC_DIR, OUT / "static", dirs_exist_ok=True)
 
