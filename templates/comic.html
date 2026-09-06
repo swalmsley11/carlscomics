@@ -10,11 +10,14 @@
     {% else %}
     <span class="arrow arrow-prev" aria-hidden="true">&#8592;</span>
     {% endif %}
-    <div class="comic-frame">
-      <picture>
-        <source srcset="{{ comic.display.webp }}" type="image/webp">
-        <img src="{{ comic.display.jpg }}" alt="{{ comic.alt }}">
-      </picture>
+    <div class="comic-stack">
+      <h2 class="comic-title">{{ comic.title }}</h2>
+      <div class="comic-frame">
+        <picture>
+          <source srcset="{{ comic.display.webp }}" type="image/webp">
+          <img src="{{ comic.display.jpg }}" alt="{{ comic.alt }}">
+        </picture>
+      </div>
     </div>
     {% if next %}
     <a class="arrow arrow-next" href="{{ next.url }}" rel="next" aria-label="Next comic">&#8594;</a>

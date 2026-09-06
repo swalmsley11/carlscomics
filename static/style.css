@@ -111,6 +111,20 @@ main.archive > img {
   height: auto;
 }
 
+.comic-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.comic-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  color: #2e2e2e;
+  text-align: center;
+}
+
 .comic-frame {
   background: #f8f2e2;
   padding: 12px;
@@ -364,7 +378,7 @@ footer a:hover {
     padding: 32px 16px;
   }
 
-  .comic-frame {
+  .comic-stack {
     grid-area: comic;
   }
 
