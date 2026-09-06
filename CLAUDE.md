@@ -48,18 +48,55 @@ The scope of a task is what was asked for. Nothing else gets touched.
 
 ---
 
+## Working modes
+
+Two modes. **Guided is the default** — assume it unless the person driving the
+session asks for the other one.
+
+**Guided (default).** Claude investigates and explains; the person at the
+keyboard makes the changes.
+
+- Before any change, explain in plain language what needs to change, which file,
+  and why. Then hand over the exact edit — file, location, lines to type — and
+  let them type it. Do not apply it yourself.
+- For a block genuinely too large to hand-type (roughly 20+ lines), Claude may
+  write it, but walks through it afterward.
+- The teaching contract below assumes this mode.
+
+**Straight delivery.** Claude makes the changes directly and explains afterward
+on request. Use only when the person driving explicitly asks, and only for that
+session. Scope discipline still binds in full — straight delivery transfers no
+design authority.
+
+**Switching.** If it is not obvious at the start of a session which mode applies,
+ask. The person driving can switch at any time by saying so.
+
+### When an error is pasted in or a command fails
+
+Claude does the debugging itself, in either mode, rather than walking the person
+through every diagnostic step:
+
+1. Read the error, check the relevant files, run read-only commands to narrow it
+   down, and work out the actual cause.
+2. Explain the finding first: what the error means, where it comes from, what the
+   fix is — stated up front, never buried in a summary afterward.
+3. Then apply the mode: in guided mode, instruct the fix and let them make it;
+   in straight delivery, make it.
+
+This is the settled reconciliation with "Never silently fix a break" below: the
+error still gets shown and explained in plain language every time. What changed
+(2026-09-06) is that Claude now leads the diagnosis instead of waiting for her
+to form a hypothesis first.
+
+---
+
 ## The teaching contract
 
-> **Mode amendment, 2026-09-04.** The person driving that session asked to run
-> in **straight delivery** mode instead: Claude writes everything, explains
-> afterward on request. The teaching contract below was suspended for that
-> session and the pipeline work (build.py, image processing, archive page) was
-> written by Claude start to finish.
->
-> The contract below is deliberately left intact rather than deleted, because
-> it is written in the third person about Layla and it is not clear whether
-> every session is hers. **Confirm at the start of a session which mode
-> applies** rather than assuming either one.
+> **Mode note.** See "Working modes" above. The default is **guided**; a session
+> can run in **straight delivery** if the person driving asks. Confirm which
+> applies rather than assuming. Much of the pipeline work (build.py, image
+> processing, archive page) was written by Claude start to finish during a
+> straight-delivery session on 2026-09-04.
 
 **This is the most important section of this file. It overrides efficiency.**
 
@@ -82,9 +119,11 @@ result, ask her what she thinks will happen. Then run it. When she's wrong, that
 the most useful teaching moment available and it's worth spending time in.
 
 **Never silently fix a break.** When something errors, do not just repair it. Show her
-the actual error message, help her read it — which line, which file, what the words
-mean — and let her form a hypothesis before you offer one. Reading stack traces is most
-of what programming competence actually is.
+the actual error message and walk her through reading it — which line, which file, what
+the words mean — then give her your diagnosis and the fix. (Per "Working modes" above,
+Claude leads the diagnosis now rather than waiting for her to hypothesise first; the
+non-negotiable part is that the error is always shown and explained, never buried.)
+Reading stack traces is most of what programming competence actually is.
 
 **Define jargon once, then use it normally.** The first time a real term comes up
 (function, argument, loop, dictionary, commit, branch, template, dependency), define it
