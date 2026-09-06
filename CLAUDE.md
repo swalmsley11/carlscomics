@@ -167,14 +167,24 @@ comic/
   meta/            # one .json per comic: title, date, number, characters, tags, alt text
 templates/         # Jinja2 HTML templates
 static/            # CSS, fonts, favicon
-site/              # BUILD OUTPUT — never edit by hand, never commit hand edits
+docs/              # BUILD OUTPUT — committed (GitHub Pages serves it from here);
+                   # never hand-edit, always regenerate via build.py
 build.py           # the generator
+requirements.txt   # pinned Jinja2/Pillow versions
 CLAUDE.md          # this file
 ```
 
-**Image handling.** Source art is square. Generate three sizes per comic — full,
-display, and thumbnail — as WebP with a JPEG fallback. Never modify the original in
-`published/`; treat it as the master copy.
+(Earlier versions of this file called the build output `site/` and said it should
+never be committed. That was superseded 2026-09-04: the output folder is `docs/`
+and it IS committed, because that's what GitHub Pages is configured to serve.)
+
+**Image handling.** Source art's aspect ratio is not fixed — see the correction at
+the top of this file. `build.py` measures each image rather than assuming a shape.
+Generate three sizes per comic — full, display, and thumbnail — as WebP with a JPEG
+fallback. The thumbnail is the whole comic shrunk down (not a cropped panel — an
+earlier version cropped one quadrant per comic; that was dropped 2026-09-05 in
+favor of showing the whole strip). Never modify the original in `published/`; treat
+it as the master copy.
 
 **Metadata from day one.** Every comic gets a JSON file with title, comic number,
 publication date, characters appearing, and tags — even though the site initially only
@@ -220,8 +230,9 @@ Giscus routes through GitHub accounts and gives a moderation queue — but openi
 public site to comments is a deliberate decision to make on its own, not a feature to
 add mid-session because it came up.
 
-**Never commit:** anything in `site/`, API keys or tokens of any kind, `.DS_Store`,
-original files containing personal metadata.
+**Never commit:** API keys or tokens of any kind, `.DS_Store`, original files
+containing personal metadata. (`docs/` is a deliberate exception to "don't commit
+build output" — see Technical design above.)
 
 **Ask before:** installing a new dependency, changing the repo structure, force-pushing,
 or anything that touches GitHub repository settings.
@@ -249,17 +260,18 @@ Each milestone should end with something visibly working.
 2. ~~CSS to make it look intentional. She drives the design.~~ done
 3. ~~`build.py` generating that same page from a template and a metadata file.~~ done
 4. ~~The build loops over a folder — multiple comics, multiple pages.~~ done
-5. ~~Archive page with thumbnails.~~ done — gallery of framed quadrant crops
+5. ~~Archive page with thumbnails.~~ done — gallery of framed comic thumbnails
+   (whole comic shrunk down; see Technical design)
 6. ~~Previous / next navigation.~~ done
-7. Live on GitHub Pages, manually built and pushed. **Blocked**: the Pages
-   source still points at the repo root and must be switched to `/docs`.
+7. ~~Live on GitHub Pages, manually built and pushed.~~ done — Pages source
+   switched to `/docs` 2026-09-05.
 8. RSS feed. `<link rel="alternate">` and the footer link already point at
    `/rss.xml`, which does not exist yet — build.py needs to write it.
 9. GitHub Actions auto-deploy.
 10. `/publish` slash command.
 
-Also outstanding: the **About** page. The nav has an About link pointing at
-`#`, which is a dead link on a live site.
+Also done, not on the numbered list above: the **About** page (currently a
+"Coming soon" placeholder).
 
 ---
 

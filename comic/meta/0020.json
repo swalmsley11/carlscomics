@@ -1,0 +1,9 @@
+{
+  "number": 20,
+  "slug": "carl-snake",
+  "title": "Snake",
+  "date": "2026-09-05",
+  "image": "0020_carl-snake.jpg",
+  "characters": ["Carl", "Snake"],
+  "tags": ["snake", "cockatiel"]
+}

@@ -1,11 +1,9 @@
 {
   "number": 1,
-  "slug": "carl-schemes",
-  "title": "Schemes",
+  "slug": "carl-breakfast",
+  "title": "Breakfast",
   "date": "2026-09-03",
-  "image": "0001_carl-schemes.png",
-  "thumb_quadrant": "bottom-right",
+  "image": "0001_carl-breakfast.jpg",
   "characters": ["Carl"],
-  "tags": ["introduction", "cockatiel"],
-  "alt": "Four panels of Carl, a yellow and grey cockatiel. Panel one, 'I Eats': Carl holds a seed in his beak. Panel two, 'I Sleeps': Carl tucks his head into his back, with a small 'zzz' above him. Panel three, 'I Screams': Carl opens his beak wide and a long spiral of 'a' and 'o' letters pours out. Panel four, 'I Schemes': a close-up of Carl's face against a scribbled grey background, one eye narrowed, captioned 'im evl'."
+  "tags": ["breakfast", "cockatiel"]
 }

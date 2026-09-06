@@ -35,47 +35,10 @@ DOMAIN = "carlscomics.com"
 # master copies and are never modified.
 FULL_WIDTH = 2400      # "view it big" version
 DISPLAY_WIDTH = 1280   # what the comic page shows (2x the 640px CSS width)
-THUMB_WIDTH = 560      # the cropped quadrant in the archive gallery
+THUMB_WIDTH = 560      # the archive gallery thumbnail (whole comic, shrunk)
 
 WEBP_QUALITY = 82
 JPEG_QUALITY = 86
-
-# The gap between panels is not always exactly at the halfway line, so a
-# quadrant crop is pulled in slightly on the two edges that meet the divider.
-# The other two edges are the border of the image itself and stay put, which
-# keeps artwork and lettering near the outside of a panel intact.
-QUADRANT_INSET = 0.015
-
-QUADRANTS = ("top-left", "top-right", "bottom-left", "bottom-right")
-
-
-def crop_quadrant(image, quadrant):
-    """Return one quarter of a four-panel comic, inset slightly from its edges."""
-    if quadrant not in QUADRANTS:
-        raise ValueError(
-            f"thumb_quadrant must be one of {QUADRANTS}, got {quadrant!r}"
-        )
-
-    width, height = image.size
-    mid_x, mid_y = width // 2, height // 2
-
-    is_left = quadrant.endswith("left")
-    is_top = quadrant.startswith("top")
-
-    left, right = (0, mid_x) if is_left else (mid_x, width)
-    top, bottom = (0, mid_y) if is_top else (mid_y, height)
-
-    inset_x = int((right - left) * QUADRANT_INSET)
-    inset_y = int((bottom - top) * QUADRANT_INSET)
-
-    return image.crop(
-        (
-            left + (0 if is_left else inset_x),
-            top + (0 if is_top else inset_y),
-            right - (inset_x if is_left else 0),
-            bottom - (inset_y if is_top else 0),
-        )
-    )
 
 
 def resize_to_width(image, target_width):
@@ -113,7 +76,7 @@ def write_variant(image, stem, source_mtime):
     }
 
 
-def process_images(meta):
+def process_images(meta, meta_mtime):
     """Generate full, display and thumbnail variants for one comic."""
     source_path = SOURCE_DIR / meta["image"]
     if not source_path.exists():
@@ -122,7 +85,12 @@ def process_images(meta):
             f"but is not in comic/published/"
         )
 
-    source_mtime = source_path.stat().st_mtime
+    # Compare against the metadata file's mtime too, not just the source
+    # image's -- otherwise editing a comic's JSON to point at a *different*
+    # image (renumbering, swapping in a corrected file) can silently keep
+    # stale cached output if that new image happens to be older than what
+    # was last built for this comic number.
+    source_mtime = max(source_path.stat().st_mtime, meta_mtime)
     stem = f"{meta['number']:04d}"
 
     with Image.open(source_path) as original:
@@ -137,9 +105,7 @@ def process_images(meta):
                 source_mtime,
             ),
             "thumb": write_variant(
-                resize_to_width(
-                    crop_quadrant(original, meta["thumb_quadrant"]), THUMB_WIDTH
-                ),
+                resize_to_width(original, THUMB_WIDTH),
                 f"{stem}-thumb",
                 source_mtime,
             ),
@@ -161,7 +127,7 @@ def load_comics():
         comic = dict(meta)
         comic["url"] = f"/comics/{meta['number']:04d}/"
         comic["date_display"] = published.strftime("%-d %B %Y")
-        comic.update(process_images(meta))
+        comic.update(process_images(meta, path.stat().st_mtime))
         comics.append(comic)
 
     comics.sort(key=lambda c: c["number"])

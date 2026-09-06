@@ -40,6 +40,7 @@ templates/         # Jinja2 HTML templates
 static/            # CSS, JS
 docs/              # BUILD OUTPUT
 build.py           # the generator
+tmp/               # scratch space for dropping files (e.g. logo art) — gitignored
 ```
 
 ## Adding a comic
@@ -54,12 +55,14 @@ build.py           # the generator
    | `title`          | shown under the comic and on the archive plaque          |
    | `date`           | `YYYY-MM-DD`                                             |
    | `image`          | filename inside `comic/published/`                       |
-   | `thumb_quadrant` | which panel the archive frame shows — `top-left`, `top-right`, `bottom-left`, `bottom-right` |
    | `characters`     | list of names                                            |
    | `tags`           | list of tags                                             |
    | `alt`            | written description of all four panels — _(Optional)_   |
 
 3. Run the build, preview it, then commit and push.
 
-`build.py` regenerates images only when the source is newer than the output,
-so rebuilds after a text-only change are fast.
+`build.py` skips reprocessing a comic's images if both the source image and its
+metadata JSON are older than the last build output — editing a comic's title,
+date, or which image it points to all correctly trigger a rebuild for that one
+comic. At current comic counts a full rebuild from scratch takes well under ten
+seconds either way.
