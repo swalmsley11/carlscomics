@@ -1,9 +1,14 @@
 {
   "number": 3,
   "slug": "carl-hiss",
-  "title": "Hiss",
+  "title": "Scritches",
   "date": "2026-09-04",
   "image": "0003_carl-hiss.jpg",
-  "characters": ["Carl"],
-  "tags": ["hiss", "cockatiel"]
+  "characters": [
+    "Carl"
+  ],
+  "tags": [
+    "scritches",
+    "cockatiel"
+  ]
 }
