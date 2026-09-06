@@ -1,9 +1,14 @@
 {
   "number": 2,
   "slug": "carl-schemes",
-  "title": "Schemes",
+  "title": "Schedule",
   "date": "2026-09-04",
   "image": "0002_carl-schemes.png",
-  "characters": ["Carl"],
-  "tags": ["schemes", "cockatiel"]
+  "characters": [
+    "Carl"
+  ],
+  "tags": [
+    "schemes",
+    "cockatiel"
+  ]
 }
