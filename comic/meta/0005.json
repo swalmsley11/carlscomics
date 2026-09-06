@@ -1,9 +1,14 @@
 {
   "number": 5,
   "slug": "carl-ping",
-  "title": "Ping",
+  "title": "What's this?",
   "date": "2026-09-04",
   "image": "0005_carl-ping.jpg",
-  "characters": ["Carl"],
-  "tags": ["ping", "cockatiel"]
+  "characters": [
+    "Carl"
+  ],
+  "tags": [
+    "what's this?",
+    "cockatiel"
+  ]
 }
