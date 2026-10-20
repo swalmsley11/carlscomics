@@ -10,7 +10,6 @@ Layla. Each installment is a **single image divided into four quadrants** —
 one image file per comic, no multi-page chapters.
 
 The aspect ratio is *not* fixed. Comic #1 is 3975 × 6075, i.e. portrait 2:3.
-Earlier versions of this file claimed the format was always square; it is not.
 `build.py` measures each image rather than assuming a shape, and nothing
 downstream should assume one either.
 
@@ -20,10 +19,6 @@ GitHub Pages.
 ---
 
 ## Scope discipline — binding, all modes
-
-**Added 2026-09-04, after Claude changed the homepage layout during a task that
-was about the image pipeline and the archive page. It resized the comic, added
-a caption, restructured `main`, and reported it as "fixed along the way."**
 
 The scope of a task is what was asked for. Nothing else gets touched.
 
@@ -213,10 +208,6 @@ requirements.txt   # pinned Jinja2/Pillow versions
 CLAUDE.md          # this file
 ```
 
-(Earlier versions of this file called the build output `site/` and said it should
-never be committed. That was superseded 2026-09-04: the output folder is `docs/`
-and it IS committed, because that's what GitHub Pages is configured to serve.)
-
 **Image handling.** Source art's aspect ratio is not fixed — see the correction at
 the top of this file. `build.py` measures each image rather than assuming a shape.
 Generate three sizes per comic — full, display, and thumbnail — as WebP with a JPEG
@@ -233,21 +224,19 @@ Explain this to her when it comes up; designing for a future you can see is a re
 skill.
 
 **Alt text is optional.** A comic's metadata may include an `alt` field, but it is not
-required — nothing in the build enforces it, and there is no guardrail requiring one.
-(An earlier version of this file called alt text non-negotiable; that line did not come
-from her and was removed 2026-09-04.)
+required. Nothing in the build enforces it, and there is no guardrail requiring one.
 
 ---
 
 ## Publishing workflow
 
-1. She exports a finished square page from Fresco on the iPad to a
-   shared iCloud Drive folder that syncs to `comic/drafts/` on the Mac.
-2. She runs `/publish`.
+1. Artist exports a finished square page to a shared folder that syncs to 
+   `comic/drafts/` on the dev workspace.
+2. Runs `/publish`.
 3. Claude finds the new file, asks her for a title (and alt text, if she wants to write
    one — optional), assigns the next comic number, writes the metadata JSON, moves the
    image into `published/`, and runs the build.
-4. She previews the site locally and confirms it looks right.
+4. Previews the site locally and confirms it looks right.
 5. Commit and push. The site updates.
 
 Build `/publish` as a slash command only *after* the manual version works and she
@@ -287,7 +276,6 @@ milestone. Scope discipline is part of what she's learning.
 - Comments
 - Newsletter or email signup
 - Analytics
-- Any JavaScript at all, until there's a feature that genuinely requires it
 
 ---
 
