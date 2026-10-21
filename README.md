@@ -33,17 +33,40 @@ The site uses root-relative links (`/archive/`, `/static/style.css`), so it must
 
 ```
 comic/
-  drafts/          # new art lands here unprocessed
   published/       # source images, numbered and sequenced
   meta/            # one .json per comic
 templates/         # Jinja2 HTML templates
 static/            # CSS, JS
 docs/              # BUILD OUTPUT
 build.py           # the generator
+upload.py          # local upload page (see below)
+robots.txt         # copied into docs/ by build.py — edit this one, not docs/robots.txt
 tmp/               # scratch space for dropping files (e.g. logo art) — gitignored
 ```
 
+## Upload page
+
+The usual way to add a comic:
+
+```
+.venv/bin/python upload.py
+```
+
+Then open <http://127.0.0.1:8766/upload>. It only runs on this machine and is never
+deployed.
+
+1. Drop in the image (JPEG or PNG), then enter a number (pre-filled) and a title.
+2. **Save and build** adds the image and metadata and runs the build. It refuses an
+   existing number, or an image with identifying metadata embedded in it.
+3. **Preview** the comic. Every page has a "Back to upload" bar at the bottom.
+4. **Publish** commits and pushes it, or **Discard** removes it and rebuilds.
+
+Saved-but-unpublished comics stay listed on the upload page until you publish or
+discard them. Stop the server with Ctrl+C.
+
 ## Adding a comic
+
+By hand, without the upload page. These are the same steps the upload page does.
 
 1. Put the finished comic in `comic/published/` as `NNNN_slug.png`.
 2. Copy an existing file in `comic/meta/` to `NNNN.json` and fill it in:

@@ -206,7 +206,6 @@ so be ready to justify them if asked:
 
 ```
 comic/
-  drafts/          # new art lands here from the iPad, unprocessed
   published/       # source images, renamed and sequenced
   meta/            # one .json per comic: title, date, number, characters, tags, alt text
 templates/         # Jinja2 HTML templates
@@ -242,18 +241,29 @@ required. Nothing in the build enforces it, and there is no guardrail requiring 
 
 ## Publishing workflow
 
-1. Artist exports a finished square page to a shared folder that syncs to 
-   `comic/drafts/` on the dev workspace.
-2. Runs `/publish`.
-3. Claude finds the new file, asks her for a title (and alt text, if she wants to write
-   one — optional), assigns the next comic number, writes the metadata JSON, moves the
-   image into `published/`, and runs the build.
-4. Previews the site locally and confirms it looks right.
-5. Commit and push. The site updates.
+New comics go through the local upload page, `upload.py`. It runs on 127.0.0.1 only
+and is never deployed.
 
-Build `/publish` as a slash command only *after* the manual version works and she
-understands each step it's automating. Automating something she doesn't understand is
-exactly the failure this project is designed to avoid.
+1. Start it with `.venv/bin/python upload.py` and open http://127.0.0.1:8766/upload.
+2. Drop in the finished image (JPEG or PNG) and enter a **number** (pre-filled with the
+   next one) and a **title**. The slug and filename (`NNNN_carl-title`) are derived from
+   them and shown on the form.
+3. **Save and build.** It refuses an existing number and any image with identifying
+   embedded metadata (EXIF artist/copyright/GPS, XMP creator). Otherwise it copies the
+   image into `comic/published/`, writes `comic/meta/NNNN.json` (date = today,
+   characters `["Carl"]`, tags `[title, "cockatiel"]`), and runs `build.py`. A failed
+   build undoes the save.
+4. **Preview.** Every site page served by `upload.py` carries a "Back to upload" bar
+   (added on the fly, never written to `docs/`).
+5. **Publish** commits that comic plus `docs/` and pushes — or **Discard** deletes the
+   comic and its generated pages and rebuilds. Unpublished comics are listed on the
+   upload page (found via git), so nothing is lost by navigating away.
+
+The page does not collect alt text; add an `alt` field to the comic's JSON by hand if
+wanted, then rebuild. The manual equivalent of every step is in README.md ("Adding a
+comic") — when she uses the page, she should be able to say what each button does in
+those terms. Automating something she doesn't understand is exactly the failure this
+project is designed to avoid.
 
 ---
 
@@ -309,7 +319,8 @@ Each milestone should end with something visibly working.
 8. RSS feed. `<link rel="alternate">` and the footer link already point at
    `/rss.xml`, which does not exist yet — build.py needs to write it.
 9. GitHub Actions auto-deploy.
-10. `/publish` slash command.
+10. ~~`/publish` slash command.~~ superseded 2026-10-19 by the local upload page
+    (`upload.py`) — see Publishing workflow.
 
 Also done, not on the numbered list above: the **About** page (currently a
 "Coming soon" placeholder).
