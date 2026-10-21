@@ -191,6 +191,16 @@ so be ready to justify them if asked:
 - **GitHub Pages.** Free, no account billing, no server to maintain. It serves whatever
   static files are in the published folder.
 - **GitHub Actions** to run the build and deploy on push, once the manual version works.
+- **Cloudflare** for the domain. DNS records are **DNS only, not proxied** — traffic
+  goes straight to GitHub Pages, so Cloudflare features that need the proxy (automatic
+  analytics, Bot Fight Mode, AI-bot blocking) are not in effect. Also on Cloudflare:
+  - **Web Analytics**, via the JS snippet in `templates/base.html` (cookieless, so
+    no consent banner). It only reaches the live site after a rebuild of `docs/`.
+  - **Email Routing**: `layla@carlscomics.com` forwards to a private inbox; a
+    catch-all rule drops every other address. SPF, DKIM and DMARC (`p=reject`) are
+    set, so the domain can't be spoofed.
+- **robots.txt** asks AI *training* crawlers to stay out; search engines and AI search
+  tools are allowed. It is a request, not enforcement.
 
 **Repository layout:**
 
@@ -204,6 +214,8 @@ static/            # CSS, fonts, favicon
 docs/              # BUILD OUTPUT — committed (GitHub Pages serves it from here);
                    # never hand-edit, always regenerate via build.py
 build.py           # the generator
+upload.py          # local-only upload page (127.0.0.1): save, preview, publish, discard
+robots.txt         # source for docs/robots.txt — build.py copies it; edit here
 requirements.txt   # pinned Jinja2/Pillow versions
 CLAUDE.md          # this file
 ```
@@ -249,7 +261,9 @@ exactly the failure this project is designed to avoid.
 
 **Privacy.** The site publishes under a pen name. Her real name, age, school, town, and
 personal email must never appear in any file in this repo — including commit messages,
-alt text, and code comments. Contact goes through a dedicated project email. If she
+alt text, and code comments. Contact goes through the project address,
+`layla@carlscomics.com` (see Cloudflare above). It only receives: a reply sent from the
+inbox it forwards to goes out from that inbox's address, which would expose it. If she
 proposes adding something personally identifying, flag it and explain the reasoning
 rather than just refusing.
 
@@ -260,7 +274,8 @@ add mid-session because it came up.
 
 **Never commit:** API keys or tokens of any kind, `.DS_Store`, original files
 containing personal metadata. (`docs/` is a deliberate exception to "don't commit
-build output" — see Technical design above.)
+build output" — see Technical design above. The Cloudflare Web Analytics token in
+`templates/base.html` is also fine: it is public by design and appears in every page.)
 
 **Ask before:** installing a new dependency, changing the repo structure, force-pushing,
 or anything that touches GitHub repository settings.
@@ -275,7 +290,6 @@ milestone. Scope discipline is part of what she's learning.
 - Merch and any storefront
 - Comments
 - Newsletter or email signup
-- Analytics
 
 ---
 
