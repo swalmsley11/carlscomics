@@ -1,0 +1,36 @@
+# robots.txt for carlscomics.com
+#
+# build.py copies this file to docs/robots.txt -- edit it here, not in docs/.
+#
+# Asks crawlers that collect pages to train AI models to stay out. Everything
+# else -- normal search engines, and AI search tools that link back to the
+# site -- is allowed, since robots.txt allows anything not listed.
+# This is a request, not enforcement: well-behaved crawlers honour it.
+
+# OpenAI
+User-agent: GPTBot
+# Anthropic
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+# Google: opts out of Gemini training only; Google Search is unaffected
+User-agent: Google-Extended
+# Apple: opts out of Apple AI training only; Apple search is unaffected
+User-agent: Applebot-Extended
+# Meta
+User-agent: Meta-ExternalAgent
+# ByteDance
+User-agent: Bytespider
+# Common Crawl, a public dataset widely used for AI training
+User-agent: CCBot
+# Cohere
+User-agent: cohere-training-data-crawler
+# Allen Institute for AI
+User-agent: AI2Bot
+# Huawei
+User-agent: PanguBot
+# Diffbot, which sells crawled data for AI use
+User-agent: Diffbot
+# Image scraping for AI datasets
+User-agent: ImagesiftBot
+User-agent: Timpibot
+Disallow: /

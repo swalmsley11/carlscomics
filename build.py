@@ -186,6 +186,8 @@ def main():
     # from running the files through Jekyll first.
     (OUT / "CNAME").write_text(DOMAIN + "\n")
     (OUT / ".nojekyll").write_text("")
+    # Crawlers only look for robots.txt at the site root, not in /static/.
+    shutil.copy(ROOT / "robots.txt", OUT / "robots.txt")
 
     print(f"\nBuilt {len(comics)} comic(s) into {OUT.relative_to(ROOT)}/")
 
